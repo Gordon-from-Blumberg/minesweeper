@@ -8,11 +8,10 @@ export class StateManager {
   private states: Map<string, State> = new Map<string, State>();
   private currentState: State;
 
-  addState(state: State): StateManager {
+  addState(state: State): void {
     state.stateChanged = this.setCurrentState;
 
     this.states.set(state.name, state);
-    return this;
   }
 
   init(stateName: string) {
