@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="height: 512px; width: 512px;">
+	<defs>
+		<linearGradient x1="0" x2="1" y1="0" y2="1" id="gradient-0">
+			<stop offset="0%" stop-color="#4a90e2" stop-opacity="1"></stop>
+			<stop offset="100%" stop-color="#1450be" stop-opacity="1"></stop>
+		</linearGradient>
+		<linearGradient id="gradient-2">
+			<stop offset="0%" stop-color="#b57204" stop-opacity="1"></stop>
+			<stop offset="100%" stop-color="#8b572a" stop-opacity="1"></stop>
+		</linearGradient>
+		<linearGradient id="gradient-3">
+			<stop offset="0%" stop-color="#e62d2d" stop-opacity="1"></stop>
+			<stop offset="100%" stop-color="#f53737" stop-opacity="1"></stop>
+		</linearGradient>
+	</defs>
+	<rect fill="url(#gradient-0)" height="512" width="512" rx="32" ry="32"></rect>
+	<g class="" transform="translate(0,0)" style="touch-action: none;">
+		<g>
+			<path d="M151 32L151 479L169 479L169 32L151 32Z" class="" fill="url(#gradient-2)"></path>
+			<path d="M398 41.574L384.572 49.164C352.946 67.04 323.08 61.431 291.434 53.52C259.787 45.608 226.604 34.68 193.488 48.713L188 51.039L188 166.588L200.512 161.288C226.395 150.32 254.713 158.892 287.066 166.98C319.42 175.069 356.054 181.96 393.428 160.836L398 158.252L398 41.574Z" class="" fill="url(#gradient-3)"></path>
+		</g>
+	</g>
+</svg>
