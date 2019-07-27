@@ -1,10 +1,8 @@
-import { providePIXI } from '../provide-pixi';
+import * as PIXI from 'pixi.js-legacy';
 
 export class Game {
   static init(): void {
-    const PIXI = providePIXI();
-
-    const app = new PIXI.Application({
+    const app = PIXI.autoDetectRenderer({
       width: 800,
       height: 600
     });

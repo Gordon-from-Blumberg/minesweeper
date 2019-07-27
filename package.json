@@ -10,7 +10,6 @@
   "author": "Aleksandr Ivko",
   "license": "MIT",
   "dependencies": {
-    "pixi.js": "^5.1.0",
     "pixi.js-legacy": "^5.1.0"
   },
   "devDependencies": {
