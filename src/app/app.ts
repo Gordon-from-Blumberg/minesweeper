@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js-legacy';
 import { StateManager } from './state/state-manager';
 import { MainMenuState } from './state/main-menu/main-menu-state';
 
-export class Game {
+export class App {
   static init(): void {
     const app = new PIXI.Application({
       width: 800,
