@@ -1,9 +1,13 @@
-import { AbstractState } from '../abstract-state';
 import * as PIXI from 'pixi.js-legacy';
+
+import { AbstractState } from '../abstract-state';
+import { ConfigService } from '../../config/config-service';
 
 export class MainMenuState extends AbstractState {
   private readonly BUTTON_BORDER_COLOR = 0xa58830;
   private readonly BUTTON_BORDER_HOVERED_COLOR = 0xc5a850;
+
+  private config;
 
   private playButtonHovered = false;
   private playButton: PIXI.Graphics;
@@ -13,10 +17,13 @@ export class MainMenuState extends AbstractState {
   }
 
   init() {
+    this.config = ConfigService.getInstance().getConfig();
+    const mainMenuCfg = this.config.mainMenu;
+
     const background = new PIXI.TilingSprite(
-      this.resources.backgroundColorGrass.texture,
-      800,
-      600
+      this.resources[mainMenuCfg.background].texture,
+      this.config.screenWidth,
+      this.config.screenHeight
     );
     this.scene.addChild(background);
 
@@ -30,15 +37,22 @@ export class MainMenuState extends AbstractState {
     this.scene.addChild(this.playButton);
     this.drawPlayButton(this.BUTTON_BORDER_COLOR);
 
-    const playIcon = new PIXI.Sprite(this.resources.playIcon.texture);
-    playIcon.position.set(216, 438);
+    const playButtonCfg = mainMenuCfg.playButton;
+    const playIcon = new PIXI.Sprite(this.resources[playButtonCfg.icon].texture);
+    playIcon.position.set(
+      playButtonCfg.x + playButtonCfg.padding.x, 
+      playButtonCfg.y + playButtonCfg.padding.y
+    );
     this.playButton.addChild(playIcon);
 
     const playText = new PIXI.Text('PLAY', {
-      fill: ['#888', '#444'],
-      fontSize: 64
+      fill: playButtonCfg.textStyle.fill,
+      fontSize: playButtonCfg.textStyle.fontSize
     });
-    playText.position.set(296, 438);
+    playText.position.set(
+      playIcon.getGlobalPosition().x + playIcon.width + playButtonCfg.iconTextSpace, 
+      playButtonCfg.y + playButtonCfg.padding.y
+    );
     this.playButton.addChild(playText);
 
     //todo: hightlight on hover does not work
@@ -59,11 +73,12 @@ export class MainMenuState extends AbstractState {
   }
 
   private drawPlayButton(lineColor: number) {
+    const cfg = this.config.mainMenu.playButton;
     this.playButton
       .clear()
       .beginFill(0x80aaff)
       .lineStyle(5, lineColor)
-      .drawRoundedRect(200, 430, 280, 80, 20)
+      .drawRoundedRect(cfg.x, cfg.y, cfg.width, cfg.height, 20)
       .endFill();
 
     this.scene.addChild(this.playButton);

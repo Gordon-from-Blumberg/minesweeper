@@ -1,13 +1,17 @@
 import * as PIXI from 'pixi.js-legacy';
+
 import { StateManager } from './state/state-manager';
 import { MainMenuState } from './state/main-menu/main-menu-state';
 import { GameState } from './state/game/game-state';
+import { ConfigService } from './config/config-service';
 
 export class App {
   static init(): void {
+    const config = ConfigService.getInstance().getConfig();
+
     const app = new PIXI.Application({
-      width: 800,
-      height: 600
+      width: config.screenWidth,
+      height: config.screenHeight
     });
   
     document.getElementById('container').appendChild(app.view);
