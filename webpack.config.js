@@ -36,7 +36,8 @@ module.exports = {
   plugins: [
     new CopyPlugin([
       { from: 'index.html', to: 'index.html' },
-      { from: 'assets/', to: 'assets' }
+      { from: 'assets/', to: 'assets' },
+      { from: 'favicon.ico', to: 'favicon.ico' }
     ])
   ]
 };
