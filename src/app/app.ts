@@ -42,6 +42,7 @@ export class App {
 
         stateManager.init();
 
+        //on game state we have timer so we need deltaMS for its correct work
         app.ticker.add(dt => stateManager.update(dt, app.ticker.deltaMS));
       })
   }
