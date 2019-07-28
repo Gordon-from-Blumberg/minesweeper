@@ -48,7 +48,7 @@ export class MainMenuState extends AbstractState {
     this.playButton.on('click', () => this.stateChanged('game'));
   }
   
-  update(dt: number) {
+  update(dtime: number, dms: number) {
     const lineColor = this.playButton.line.color;
     if (this.playButtonHovered && lineColor < this.BUTTON_BORDER_HOVERED_COLOR) {
       this.drawPlayButton(lineColor + 0x010101);

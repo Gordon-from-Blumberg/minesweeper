@@ -31,5 +31,5 @@ export abstract class AbstractState implements State {
   }
 
   abstract init(): void;
-  abstract update(dt: number): void;
+  abstract update(dtime: number, dms: number): void;
 }

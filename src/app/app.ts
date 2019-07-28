@@ -42,7 +42,7 @@ export class App {
 
         stateManager.init();
 
-        app.ticker.add(stateManager.update.bind(stateManager));
+        app.ticker.add(dt => stateManager.update(dt, app.ticker.deltaMS));
       })
   }
 }

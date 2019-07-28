@@ -4,6 +4,6 @@ export interface State {
   stateChanged: (newState: string) => void;
 
   init(): void;
-  update(dt: number): void;
+  update(dtime: number, dms: number): void;
   setVisible(visible: boolean): void;
 }

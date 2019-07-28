@@ -2,7 +2,7 @@ import { AbstractState } from '../abstract-state';
 import * as PIXI from 'pixi.js-legacy';
 
 export class GameState extends AbstractState {
-  private readonly FRAME_DURATION = 1 / 60;
+  private readonly MS_PER_SECOND = 1000;
 
   private gameInfo: PIXI.Container;
   private pauseButton;
@@ -64,11 +64,14 @@ export class GameState extends AbstractState {
     this.minesInfo.position.set(286, 8);
     minesInfoBlock.addChild(this.minesInfo);
     this.gameInfo.addChild(minesInfoBlock);
+
+    window.addEventListener('keydown', this.keyDownHandler.bind(this), false);
   }
 
-  update(dt: number) {
-    this.time += dt * this.FRAME_DURATION;
-    this.timeInfo.text = `Time: ${this.time ^ 0}`;
+  update(dtime: number, dms: number) {
+    this.time += dms;
+
+    this.timeInfo.text = `Time: ${this.time / this.MS_PER_SECOND ^ 0}`;
 
     this.minesInfo.text = `Mines left: ${this.minesCount - this.markedMinesCount}`;
   }
@@ -79,5 +82,13 @@ export class GameState extends AbstractState {
       .lineStyle(1, 0x888888)
       .drawRoundedRect(x, 4, width, 32, 4)
       .endFill();
+  }
+
+  private keyDownHandler(event: KeyboardEvent) {
+    console.log(event);
+    if (event.code === "Space") {
+      this.stateChanged('mainMenu');
+      event.preventDefault();
+    }
   }
 }

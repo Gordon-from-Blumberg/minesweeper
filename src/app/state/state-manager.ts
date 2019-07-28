@@ -24,8 +24,8 @@ export class StateManager {
     this.setCurrentState(this.states.keys().next().value);
   }
 
-  update(dt: number) {
-    this.currentState.update(dt);
+  update(dtime: number, dms: number) {
+    this.currentState.update(dtime, dms);
   }
 
   private setCurrentState(newState: string) {
