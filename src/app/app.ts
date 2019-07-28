@@ -25,6 +25,7 @@ export class App {
       .add('minefield2', 'minefield2.png')
       .add('barbedWire', 'barbed-wire.png')
       .add('playIcon', 'play-icon.png')
+      .add('pauseIcon', 'pause-icon.png')
 
       .load((loader, resources) => {
         const stateManager = new StateManager();
