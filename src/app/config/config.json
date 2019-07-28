@@ -3,7 +3,7 @@
   "screenHeight": 600,
 
   "mainMenu": {
-    "background": "backgroundColorGrass",
+    "background": "background",
     "playButton": {
       "x": 200,
       "y": 430,
@@ -23,8 +23,11 @@
   },
 
   "game": {
-    "background": "backgroundColorGrass",
-    "mineField": {
+    "background": "background",
+
+    "minefield": {
+      "columns": 60,
+      "rows": 40,
       "minesCount": 50
     },
     

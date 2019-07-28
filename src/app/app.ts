@@ -4,6 +4,7 @@ import { StateManager } from './state/state-manager';
 import { MainMenuState } from './state/main-menu/main-menu-state';
 import { GameState } from './state/game/game-state';
 import { ConfigService } from './config/config-service';
+import { Resources } from './resources';
 
 export class App {
   static init(): void {
@@ -19,12 +20,11 @@ export class App {
     app.loader.baseUrl = 'assets/images/';
     app.loader
       .add('background', 'background.png')
-      .add('backgroundColorGrass', 'backgroundColorGrass.png')
-      .add('cell', 'cell.svg')
-      .add('cellHightlight', 'cell-hightlight.svg')
-      .add('flag', 'flag.svg')
-      .add('mine', 'mine.svg')
-      .add('mineExplosion', 'mine-explosion.svg')
+      .add('cell', 'cell.png')
+      .add('cellHightlight', 'cell-hightlight.png')
+      .add('flag', 'flag.png')
+      .add('mine', 'mine.png')
+      .add('mineExplosion', 'mine-explosion.png')
       .add('minefield1', 'minefield1.png')
       .add('minefield2', 'minefield2.png')
       .add('barbedWire', 'barbed-wire.png')
@@ -32,6 +32,8 @@ export class App {
       .add('pauseIcon', 'pause-icon.png')
 
       .load((loader, resources) => {
+        Resources.setResources(resources);
+
         const stateManager = new StateManager();
         
         //create container for each state
@@ -41,7 +43,7 @@ export class App {
           const scene = new PIXI.Container();
           scene.visible = false;
           app.stage.addChild(scene);
-          stateManager.addState(new stateConstructor(scene, resources));
+          stateManager.addState(new stateConstructor(scene));
         });
 
         stateManager.init();
