@@ -9,7 +9,7 @@ export class StateManager {
   private currentState: State;
 
   addState(state: State): void {
-    state.stateChanged = this.setCurrentState;
+    state.stateChanged = this.setCurrentState.bind(this);
 
     this.states.set(state.name, state);
   }
@@ -29,7 +29,6 @@ export class StateManager {
   }
 
   private setCurrentState(newState: string) {
-    console.log(`setCurrentState: ${newState}`);
     if (this.currentState) {
       this.currentState.setVisible(false);
     }
@@ -38,6 +37,5 @@ export class StateManager {
 
     this.currentState = state;
     this.currentState.setVisible(true);
-    console.dir(this.currentState);
   }
 }

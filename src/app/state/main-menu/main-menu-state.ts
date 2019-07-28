@@ -44,6 +44,8 @@ export class MainMenuState extends AbstractState {
     //todo: hightlight on hover does not work
     //this.playButton.on('mouseover', () => this.playButtonHovered = true);
     //this.playButton.on('mouseout', () => this.playButtonHovered = false);
+
+    this.playButton.on('click', () => this.stateChanged('game'));
   }
   
   update(dt: number) {

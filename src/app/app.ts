@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js-legacy';
 import { StateManager } from './state/state-manager';
 import { MainMenuState } from './state/main-menu/main-menu-state';
+import { GameState } from './state/game/game-state';
 
 export class App {
   static init(): void {
@@ -31,7 +32,7 @@ export class App {
         //create container for each state
         //then create state instance and add it to StateManager
         //first state in the array will be set as current
-        [ MainMenuState ].forEach(stateConstructor => {
+        [ MainMenuState, GameState ].forEach(stateConstructor => {
           const scene = new PIXI.Container();
           scene.visible = false;
           app.stage.addChild(scene);
@@ -40,7 +41,7 @@ export class App {
 
         stateManager.init();
 
-        app.ticker.add(dt => stateManager.update(dt));
+        app.ticker.add(stateManager.update.bind(stateManager));
       })
   }
 }
