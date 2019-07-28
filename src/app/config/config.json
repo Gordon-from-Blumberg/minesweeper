@@ -24,7 +24,10 @@
 
   "game": {
     "background": "backgroundColorGrass",
-    "minesCount": 50,
+    "mineField": {
+      "minesCount": 50
+    },
+    
     "buttons": {
       "height": 32,
       "x": 16,
