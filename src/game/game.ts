@@ -14,24 +14,33 @@ export class Game {
     app.loader.baseUrl = 'assets/images/';
     app.loader
       .add('background', 'background.png')
+      .add('backgroundColorGrass', 'backgroundColorGrass.png')
       .add('cell', 'cell.svg')
-      .add('cell-hightlight', 'cell-hightlight.svg')
+      .add('cellHightlight', 'cell-hightlight.svg')
       .add('flag', 'flag.svg')
       .add('mine', 'mine.svg')
-      .add('mine-explosion', 'mine-explosion.svg')
-      .add('minefield1', 'minefield1.svg')
-      .add('minefield2', 'minefield2.svg')
+      .add('mineExplosion', 'mine-explosion.svg')
+      .add('minefield1', 'minefield1.png')
+      .add('minefield2', 'minefield2.png')
+      .add('barbedWire', 'barbed-wire.png')
+      .add('playIcon', 'play-icon.png')
 
       .load((loader, resources) => {
         const stateManager = new StateManager();
-
+        
         //create container for each state
         //then create state instance and add it to StateManager
-        [MainMenuState].forEach(stateConstructor => {
+        //first state in the array will be set as current
+        [ MainMenuState ].forEach(stateConstructor => {
           const scene = new PIXI.Container();
+          scene.visible = false;
           app.stage.addChild(scene);
-          stateManager.addState(new stateConstructor(scene));
+          stateManager.addState(new stateConstructor(scene, resources));
         });
+
+        stateManager.init();
+
+        app.ticker.add(dt => stateManager.update(dt));
       })
   }
 }

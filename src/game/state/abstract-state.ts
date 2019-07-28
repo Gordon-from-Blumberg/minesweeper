@@ -1,20 +1,33 @@
 import { State } from './state';
-import { Container } from 'pixi.js-legacy';
+import { Container, resources } from 'pixi.js-legacy';
 
 export abstract class AbstractState implements State {
-  /** 
-   * name of state in lowerCamelCase
-   * used as key in states map in StateManager
+  /**
+   * PIXI container that represents this state
    */
+  protected readonly scene: Container;
+
+  /**
+   * Loaded resources
+   */
+  protected resources;
+
   readonly name: string;
 
-  private readonly container: Container;
-
+  /**
+   * This handler should be called when current state is changed
+   * @param newState the name of the next state
+   */
   stateChanged: (newState: string) => void;
 
-  constructor(name: string, container: Container) {
+  constructor(name: string, scene: Container, resources) {
     this.name = name;
-    this.container = container;
+    this.scene = scene;
+    this.resources = resources;
+  }
+
+  setVisible(visible: boolean) {
+    this.scene.visible = visible;
   }
 
   abstract init(): void;

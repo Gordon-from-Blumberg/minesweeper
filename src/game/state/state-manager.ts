@@ -14,15 +14,14 @@ export class StateManager {
     this.states.set(state.name, state);
   }
 
-  init(stateName: string) {
+  init() {
     for (const state of this.states.values()) {
       //todo: think about to make async init of each state
       state.init();
     }
 
-    this.setCurrentState(stateName);
-
-    //todo: add 'update' method to ticker
+    //set first state as current
+    this.setCurrentState(this.states.keys().next().value);
   }
 
   update(dt: number) {
@@ -30,8 +29,15 @@ export class StateManager {
   }
 
   private setCurrentState(newState: string) {
+    console.log(`setCurrentState: ${newState}`);
+    if (this.currentState) {
+      this.currentState.setVisible(false);
+    }
+
     const state = this.states.get(newState);
 
     this.currentState = state;
+    this.currentState.setVisible(true);
+    console.dir(this.currentState);
   }
 }

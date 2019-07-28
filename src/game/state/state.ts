@@ -5,4 +5,5 @@ export interface State {
 
   init(): void;
   update(dt: number): void;
+  setVisible(visible: boolean): void;
 }
