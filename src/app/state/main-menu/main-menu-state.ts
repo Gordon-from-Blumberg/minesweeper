@@ -2,7 +2,7 @@ import { AbstractState } from '../abstract-state';
 import * as PIXI from 'pixi.js-legacy';
 
 export class MainMenuState extends AbstractState {
-  private readonly BUTTON_BORDER_COLOR =10848304// 0xa58830;
+  private readonly BUTTON_BORDER_COLOR = 0xa58830;
   private readonly BUTTON_BORDER_HOVERED_COLOR = 0xc5a850;
 
   private playButtonHovered = false;
