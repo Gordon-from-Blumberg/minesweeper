@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js-legacy';
 import { AbstractState } from '../abstract-state';
 import { ConfigService } from '../../config/config-service';
 import { Minefield } from '../../minefield/minefield';
-import { Resources } from '../../resources';
+import { Resources } from '../../util/resources';
 
 export class GameState extends AbstractState {
   private readonly MS_PER_SECOND = 1000;
@@ -80,6 +80,7 @@ export class GameState extends AbstractState {
   update(dtime: number, dms: number) {
     this.time += dms;
 
+    // operation ^ 0 removes digits right to point
     this.timeInfo.text = `Time: ${this.time / this.MS_PER_SECOND ^ 0}`;
 
     this.minesInfo.text = `Mines left: ${this.minefield.minesLeft}`;

@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js-legacy';
 
 import { AbstractState } from '../abstract-state';
 import { ConfigService } from '../../config/config-service';
-import { Resources } from '../../resources';
+import { Resources } from '../../util/resources';
 
 export class MainMenuState extends AbstractState {
   private readonly BUTTON_BORDER_COLOR = 0xa58830;

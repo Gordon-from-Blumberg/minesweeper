@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js-legacy';
 
 import { Cell } from './cell';
 import { ConfigService } from '../config/config-service';
-import { Resources } from '../resources';
+import { Resources } from '../util/resources';
 
 export class Minefield {
   private readonly cellGrid: Cell[][] = [];

@@ -4,7 +4,7 @@ import { StateManager } from './state/state-manager';
 import { MainMenuState } from './state/main-menu/main-menu-state';
 import { GameState } from './state/game/game-state';
 import { ConfigService } from './config/config-service';
-import { Resources } from './resources';
+import { Resources } from './util/resources';
 
 export class App {
   static init(): void {
