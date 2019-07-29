@@ -1,3 +1,5 @@
+import { Sprite } from 'pixi.js-legacy';
+
 export interface Cell {
   x: number;
   y: number;
@@ -5,4 +7,5 @@ export interface Cell {
   siblingsWithMine: number;
   marked: boolean;
   opened: boolean;
+  sprite: Sprite
 }

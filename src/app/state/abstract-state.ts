@@ -7,11 +7,6 @@ export abstract class AbstractState implements State {
    */
   protected readonly scene: Container;
 
-  /**
-   * Loaded resources
-   */
-  protected resources;
-
   readonly name: string;
 
   /**
@@ -20,10 +15,9 @@ export abstract class AbstractState implements State {
    */
   stateChanged: (newState: string) => void;
 
-  constructor(name: string, scene: Container, resources) {
+  constructor(name: string, scene: Container) {
     this.name = name;
     this.scene = scene;
-    this.resources = resources;
   }
 
   setVisible(visible: boolean) {

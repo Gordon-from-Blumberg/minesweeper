@@ -20,6 +20,7 @@ export class App {
     app.loader.baseUrl = 'assets/images/';
     app.loader
       .add('background', 'background.png')
+      .add('backgroundOverlay', 'background-overlay.png')
       .add('cell', 'cell.png')
       .add('cellHightlight', 'cell-hightlight.png')
       .add('flag', 'flag.png')

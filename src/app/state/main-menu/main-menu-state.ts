@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js-legacy';
 
 import { AbstractState } from '../abstract-state';
 import { ConfigService } from '../../config/config-service';
+import { Resources } from '../../resources';
 
 export class MainMenuState extends AbstractState {
   private readonly BUTTON_BORDER_COLOR = 0xa58830;
@@ -12,8 +13,8 @@ export class MainMenuState extends AbstractState {
   private playButtonHovered = false;
   private playButton: PIXI.Graphics;
 
-  constructor(scene: PIXI.Container, resources) {
-    super('mainMenu', scene, resources);
+  constructor(scene: PIXI.Container) {
+    super('mainMenu', scene);
   }
 
   init() {
@@ -21,13 +22,13 @@ export class MainMenuState extends AbstractState {
     const mainMenuCfg = this.config.mainMenu;
 
     const background = new PIXI.TilingSprite(
-      this.resources[mainMenuCfg.background].texture,
+      Resources.get(mainMenuCfg.background),
       this.config.screenWidth,
       this.config.screenHeight
     );
     this.scene.addChild(background);
 
-    const icon = new PIXI.Sprite(this.resources.minefield2.texture);
+    const icon = new PIXI.Sprite(Resources.get('minefield2'));
     icon.position.set(this.scene.width - icon.width, this.scene.height - icon.height);
     this.scene.addChild(icon);
 
@@ -38,7 +39,7 @@ export class MainMenuState extends AbstractState {
     this.drawPlayButton(this.BUTTON_BORDER_COLOR);
 
     const playButtonCfg = mainMenuCfg.playButton;
-    const playIcon = new PIXI.Sprite(this.resources[playButtonCfg.icon].texture);
+    const playIcon = new PIXI.Sprite(Resources.get(playButtonCfg.icon));
     playIcon.position.set(
       playButtonCfg.x + playButtonCfg.padding.x, 
       playButtonCfg.y + playButtonCfg.padding.y

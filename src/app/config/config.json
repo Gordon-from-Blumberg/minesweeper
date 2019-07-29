@@ -23,12 +23,14 @@
   },
 
   "game": {
-    "background": "background",
+    "background": "backgroundOverlay",
 
     "minefield": {
-      "columns": 60,
-      "rows": 40,
-      "minesCount": 50
+      "columns": 30,
+      "rows": 20,
+      "minesCount": 50,
+      "cellSize": 20,
+      "cellMargin": 4
     },
     
     "buttons": {
