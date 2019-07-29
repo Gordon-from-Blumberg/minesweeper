@@ -10,15 +10,18 @@ export class Minefield {
   private config;
 
   private mineExploded: () => void;
+  //use bound function to prevent errors
   private cellOpened = this.openSiblingsOf.bind(this);
+  private cellMarked = this.adjustMarked.bind(this);
 
   scene: PIXI.Container;
 
   minesCount: number;
-  markedMinesCount = 0;
+  markedCellCount = 0;
+  openedCellCount = 0;
 
   get minesLeft() {
-    return this.minesCount - this.markedMinesCount;
+    return this.minesCount - this.markedCellCount;
   }
 
   constructor(scene: PIXI.Container, mineExploded: () => void) {
@@ -36,6 +39,7 @@ export class Minefield {
 
   private generateCells() {
     const cellTexture = Resources.get('cell');
+    //distance between right top corners of the adjacent cells
     const cellStep = this.config.cellSize + this.config.cellMargin;
 
     for (let i = 0; i < this.config.columns; i++) {
@@ -52,7 +56,8 @@ export class Minefield {
         const cell = new Cell(i, j, 
           sprite, 'cell', 
           this.mineExploded, 
-          this.cellOpened
+          this.cellOpened,
+          this.cellMarked
         );
         this.cellGrid[i][j] = cell;
       }
@@ -75,7 +80,6 @@ export class Minefield {
 
         //increment siblingsWithMine for all the siblings of this cell
         this.forEachSiblingOf(cell, sibling => sibling.siblingsWithMine++);
-        cell.setTexture('mine');
       }
     }
   }
@@ -93,9 +97,8 @@ export class Minefield {
           );
           cell.numberSprite.visible = false;
 
-          //x position delta of number depends on the digit width
-          const dx = (this.config.cellSize - cell.numberSprite.width) / 2;
-          console.log(`dx = ${ dx }, dy = ${dy}`);
+          //x position delta of number may depend on the digit width
+          const dx = (this.config.cellSize - cell.numberSprite.width) / 2;          
           cell.numberSprite.position.set(
             cell.sprite.position.x + dx,
             cell.sprite.position.y + dy
@@ -106,6 +109,7 @@ export class Minefield {
     }
   }
 
+  //invoke the passed handler for each sibling of the passed cell
   private forEachSiblingOf(cell: Cell, handler: (cell: Cell) => void) {
     for (let dx = -1; dx <= 1; dx++) {
       for (let dy = -1; dy <= 1; dy++) {
@@ -121,10 +125,20 @@ export class Minefield {
   }
 
   private openSiblingsOf(cell: Cell) {
-    this.forEachSiblingOf(cell, sibling => {
-      if (!sibling.opened && !sibling.hasMine) {
-        sibling.open();
-      }
-    });
+    this.openedCellCount++;
+
+    //do not open siblings if among them there is a mine
+    if (cell.siblingsWithMine === 0) {
+      this.forEachSiblingOf(cell, sibling => {
+        if (!sibling.opened && !sibling.hasMine) {
+          sibling.open();
+        }
+      });
+    }
+  }
+
+  private adjustMarked(cell: Cell) {
+    if (cell.marked) this.markedCellCount++;
+    else this.markedCellCount--;
   }
 }

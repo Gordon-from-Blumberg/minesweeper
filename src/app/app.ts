@@ -14,6 +14,9 @@ export class App {
       width: config.screenWidth,
       height: config.screenHeight
     });
+
+    //disable context menu
+    app.view.addEventListener('contextmenu', (e) => e.preventDefault());
   
     document.getElementById('container').appendChild(app.view);
 
