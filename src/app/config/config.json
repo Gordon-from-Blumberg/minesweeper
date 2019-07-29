@@ -16,21 +16,25 @@
       "icon": "playIcon",
       "iconTextSpace": 16,
       "textStyle": {
-        "fill": ["#888", "#444"],
+        "fill": ["#444", "#888", "#444"],
         "fontSize": 64
       }
     }
   },
 
   "game": {
-    "background": "backgroundOverlay",
+    "background": "background-overlay",
 
     "minefield": {
       "columns": 30,
       "rows": 20,
       "minesCount": 50,
       "cellSize": 20,
-      "cellMargin": 4
+      "cellMargin": 4,
+      "numberStyle": {
+        "fontSize": 16,
+        "fontWeight": 600
+      }
     },
     
     "buttons": {
@@ -49,7 +53,7 @@
       "minesInfoWidth": 160
     },
     "textStyle": {
-      "fill": ["#888", "#444"],
+      "fill": ["#333", "#444", "#666", "#444"],
       "fontSize": 24
     }
   }
