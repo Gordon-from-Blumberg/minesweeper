@@ -73,7 +73,7 @@ export class GameState extends AbstractState {
     );
     this.scene.addChild(minefieldScene);
 
-    this.pauseButton.on('click', () => this.stateChanged('mainMenu'));
+    this.pauseButton.on('click', () => this.stateChanged('pause'));
     window.addEventListener('keydown', this.keyDownHandler.bind(this), false);
   }
 
@@ -110,7 +110,7 @@ export class GameState extends AbstractState {
 
   private keyDownHandler(event: KeyboardEvent) {
     if (event.code === "Space") {
-      this.stateChanged('mainMenu');
+      this.stateChanged('pause');
       event.preventDefault();
     }
   }

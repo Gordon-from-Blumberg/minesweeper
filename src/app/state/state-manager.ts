@@ -33,9 +33,7 @@ export class StateManager {
       this.currentState.setVisible(false);
     }
 
-    const state = this.states.get(newState);
-
-    this.currentState = state;
+    this.currentState = this.states.get(newState);
     this.currentState.setVisible(true);
   }
 }

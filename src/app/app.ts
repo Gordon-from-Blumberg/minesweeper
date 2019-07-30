@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js-legacy';
 import { StateManager } from './state/state-manager';
 import { MainMenuState } from './state/main-menu/main-menu-state';
 import { GameState } from './state/game/game-state';
+import { PauseState } from './state/pause/pause-state';
 import { ConfigService } from './config/config-service';
 import { Resources } from './util/resources';
 
@@ -16,7 +17,7 @@ export class App {
     });
 
     //disable context menu
-    app.view.addEventListener('contextmenu', (e) => e.preventDefault());
+    //app.view.addEventListener('contextmenu', (e) => e.preventDefault());
   
     document.getElementById('container').appendChild(app.view);
 
@@ -24,6 +25,7 @@ export class App {
     app.loader
       .add('background', 'background.png')
       .add('background-overlay', 'background-overlay.png')
+      .add('pauseBackground', 'pauseBackground.png')
       .add('cell', 'cell.png')
       .add('cell-hl', 'cell-hl.png')
       .add('cell-opened', 'cell-opened.png')
@@ -48,7 +50,7 @@ export class App {
         //create container for each state
         //then create state instance and add it to StateManager
         //first state in the array will be set as current
-        [ MainMenuState, GameState ].forEach(stateConstructor => {
+        [ MainMenuState, GameState, PauseState ].forEach(stateConstructor => {
           const scene = new PIXI.Container();
           scene.visible = false;
           app.stage.addChild(scene);

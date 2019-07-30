@@ -46,10 +46,7 @@ export class MainMenuState extends AbstractState {
     );
     this.playButton.addChild(playIcon);
 
-    const playText = new PIXI.Text('PLAY', {
-      fill: playButtonCfg.textStyle.fill,
-      fontSize: playButtonCfg.textStyle.fontSize
-    });
+    const playText = new PIXI.Text('PLAY', playButtonCfg.textStyle);
     playText.position.set(
       playIcon.getGlobalPosition().x + playIcon.width + playButtonCfg.iconTextSpace, 
       playButtonCfg.y + playButtonCfg.padding.y

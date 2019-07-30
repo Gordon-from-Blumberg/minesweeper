@@ -1,3 +1,5 @@
+import { Texture } from 'pixi.js-legacy';
+
 export class Resources {
   private static resources;
 
@@ -5,7 +7,7 @@ export class Resources {
     this.resources = resources;
   }
 
-  static get(name: string) {
+  static get(name: string): Texture {
     return this.resources[name].texture;
   }
 }

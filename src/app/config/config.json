@@ -56,5 +56,9 @@
       "fill": ["#333", "#444", "#666", "#444"],
       "fontSize": 24
     }
+  },
+
+  "pause": {
+    "background": "pauseBackground"
   }
 }
