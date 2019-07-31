@@ -116,7 +116,7 @@ export class InfoBlock extends PIXI.Container {
     return this;
   }
 
-  addText(text: string, margin?: Size, style?: PIXI.TextStyle): InfoBlock {
+  addText(text: string, margin?: Size, style?: any): InfoBlock {
     this.textComponent = new PIXI.Text(text, style);
     
     this.componentsSizing.push({

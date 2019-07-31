@@ -26,7 +26,7 @@ export class PauseState extends AbstractState {
         .background( this.createButtonBackground(buttonCfg) )
         .setPadding(buttonCfg.padding)
         .setButtonMode(true)
-        .addIcon('playIcon')
+        .addIcon('play-icon')
         .addText('RESUME', { x: buttonCfg.textMargin }, buttonCfg.textStyle)
         .finishBuild();
     

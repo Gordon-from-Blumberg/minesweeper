@@ -29,7 +29,7 @@ export class MainMenuState extends AbstractState {
     );
     this.scene.addChild(background);
 
-    const icon = new PIXI.Sprite(Resources.get('minefield2'));
+    const icon = new PIXI.Sprite(Resources.get('minefield'));
     icon.position.set(this.scene.width - icon.width, this.scene.height - icon.height);
     this.scene.addChild(icon);
 

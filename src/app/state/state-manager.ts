@@ -1,4 +1,5 @@
 import { State } from './state';
+import { threadId } from 'worker_threads';
 
 /**
  * This class keeps all game states and manages them
@@ -28,12 +29,13 @@ export class StateManager {
     this.currentState.update(dtime, dms);
   }
 
-  private setCurrentState(newState: string) {
+  private setCurrentState(newState: string, data?: any) {
     if (this.currentState) {
       this.currentState.setVisible(false);
     }
 
     this.currentState = this.states.get(newState);
+    this.currentState.activate(data);
     this.currentState.setVisible(true);
   }
 }

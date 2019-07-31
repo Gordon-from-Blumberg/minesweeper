@@ -61,7 +61,7 @@ export class GameState extends AbstractState {
     this.gameInfo.addChild(this.minesInfo);
 
     const minefieldScene = new PIXI.Container();
-    this.minefield = new Minefield(minefieldScene, () => void 0);
+    this.minefield = new Minefield(minefieldScene, () => this.stateChanged('end', false));
     minefieldScene.position.set(
       (this.config.screenWidth - minefieldScene.width) / 2,
       (this.config.screenHeight + this.gameInfo.height - minefieldScene.height) / 2

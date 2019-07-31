@@ -12,8 +12,9 @@ export abstract class AbstractState implements State {
   /**
    * This handler should be called when current state is changed
    * @param newState the name of the next state
+   * @param data the data will be passed to activate method of the new state
    */
-  stateChanged: (newState: string) => void;
+  stateChanged: (newState: string, data?: any) => void;
 
   constructor(name: string, scene: Container) {
     this.name = name;
@@ -23,6 +24,8 @@ export abstract class AbstractState implements State {
   setVisible(visible: boolean) {
     this.scene.visible = visible;
   }
+
+  activate(data?: any) {}
 
   abstract init(): void;
   abstract update(dtime: number, dms: number): void;

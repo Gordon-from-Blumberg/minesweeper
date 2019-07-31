@@ -3,7 +3,7 @@
   "screenHeight": 600,
 
   "mainMenu": {
-    "background": "background",
+    "background": "main-menu-background",
     "playButton": {
       "x": 200,
       "y": 430,
@@ -13,7 +13,7 @@
         "x": 16,
         "y": 8
       },
-      "icon": "playIcon",
+      "icon": "play-icon",
       "textMargin": 16,
       "textStyle": {
         "fill": ["#444", "#888", "#444"],
@@ -23,7 +23,7 @@
   },
 
   "game": {
-    "background": "background-overlay",
+    "background": "game-background",
 
     "minefield": {
       "columns": 30,
@@ -46,7 +46,7 @@
         "y": 4
       },
       "marginX": 12,
-      "pauseIcon": "pauseIcon",
+      "pauseIcon": "pause-icon",
       "textStyle": {
         "fill": ["#333", "#444", "#666", "#444"],
         "fontSize": 24
@@ -58,6 +58,6 @@
   },
 
   "pause": {
-    "background": "pauseBackground"
+    "background": "pause-background"
   }
 }
