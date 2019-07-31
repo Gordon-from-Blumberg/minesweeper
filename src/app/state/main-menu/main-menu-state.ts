@@ -48,7 +48,7 @@ export class MainMenuState extends AbstractState {
     //this.playButton.on('mouseover', () => this.playButtonHovered = true);
     //this.playButton.on('mouseout', () => this.playButtonHovered = false);
 
-    this.playButton.on('click', () => this.stateChanged('game'));
+    this.playButton.on('click', () => this.stateChanged('game', true));
   }
   
   update(dtime: number, dms: number) {

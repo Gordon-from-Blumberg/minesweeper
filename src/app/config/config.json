@@ -59,5 +59,35 @@
 
   "pause": {
     "background": "pause-background"
+  },
+
+  "end": {
+    "background": "game-background",
+    "victory": {
+
+    },
+    "lose": {
+      "textStyle": {
+        "fontSize": 72,
+        "fill": ["#833", "#333"],
+        "fontWeight": 700,
+        "stroke": "#aaa",
+        "strokeThickness": 5
+      },
+      "button": {
+        "bgColorHexString": "0x80aaff",
+        "borderColorHexString": "0xa58830",
+        "padding": {
+          "x": 16,
+          "y": 8
+        },
+        "textStyle": {
+          "fontSize": 42,
+          "fill": ["#333", "#888", "#333"],
+          "fontWeight": 600
+        },
+        "marginY": 20
+      }
+    }
   }
 }

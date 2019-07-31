@@ -19,7 +19,10 @@ export class GameState extends AbstractState {
 
   private minesInfo: InfoBlock;
 
+  private minefieldScene: PIXI.Container;
   private minefield: Minefield;
+
+  private gameEnded = false;
 
   constructor(scene: PIXI.Container) {
     super('game', scene);
@@ -60,13 +63,12 @@ export class GameState extends AbstractState {
     this.minesInfo.position.x = positionX;
     this.gameInfo.addChild(this.minesInfo);
 
-    const minefieldScene = new PIXI.Container();
-    this.minefield = new Minefield(minefieldScene, () => this.stateChanged('end', false));
-    minefieldScene.position.set(
-      (this.config.screenWidth - minefieldScene.width) / 2,
-      (this.config.screenHeight + this.gameInfo.height - minefieldScene.height) / 2
+    this.minefieldScene = new PIXI.Container();
+    this.minefieldScene.position.set(
+      (this.config.screenWidth - this.minefieldScene.width) / 2,
+      (this.config.screenHeight + this.gameInfo.height - this.minefieldScene.height) / 2
     );
-    this.scene.addChild(minefieldScene);
+    this.scene.addChild(this.minefieldScene);
 
     this.gameInfo.position.set(
       (this.config.screenWidth - this.gameInfo.width) / 2,
@@ -79,12 +81,30 @@ export class GameState extends AbstractState {
   }
 
   update(dtime: number, dms: number) {
-    this.time += dms;
+    if (!this.gameEnded) {
+      this.time += dms;
 
-    // operation ^ 0 removes digits right to point
-    this.timeInfo.setText(`Time: ${this.time / this.MS_PER_SECOND ^ 0}`);
+      // operation ^ 0 removes digits right to point
+      this.timeInfo.setText(`Time: ${this.time / this.MS_PER_SECOND ^ 0}`);
 
-    this.minesInfo.setText(`Mines left: ${this.minefield.minesLeft}`);
+      this.minesInfo.setText(`Mines left: ${this.minefield.minesLeft}`);
+    }
+  }
+
+  activate(newGame: boolean) {
+    if (newGame) {
+      this.gameEnded = false;
+      this.minefieldScene.removeChildren();
+      this.minefield = new Minefield(this.minefieldScene, () => {
+        this.gameEnded = true;
+        setTimeout(() => this.stateChanged('end', false), 1000);
+      });
+      this.minefieldScene.position.set(
+        (this.config.screenWidth - this.minefieldScene.width) / 2,
+        (this.config.screenHeight + this.gameInfo.height - this.minefieldScene.height) / 2
+      );
+      this.time = 0;
+    }    
   }
 
   private createInfoBlock(text: string, buttonMode: boolean, icon?: string, textMargin?): InfoBlock {

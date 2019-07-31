@@ -52,7 +52,7 @@ export class App {
         //create container for each state
         //then create state instance and add it to StateManager
         //first state in the array will be set as current
-        [ MainMenuState, GameState, PauseState ].forEach(stateConstructor => {
+        [ MainMenuState, GameState, PauseState, EndState ].forEach(stateConstructor => {
           const scene = new PIXI.Container();
           scene.visible = false;
           app.stage.addChild(scene);
