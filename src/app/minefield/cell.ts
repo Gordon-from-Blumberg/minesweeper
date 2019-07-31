@@ -64,6 +64,10 @@ export class Cell {
     sprite.on('mouseout', () => sprite.texture = Resources.get(this.currentTexture));
 
     sprite.on('click', () => {
+      if (this.marked) {
+        return; // do nothing if cell is marked
+      }
+
       if (this.hasMine) {
         this.setTexture('mine'); //show mine
         this.mineExploded();  //trigger event
