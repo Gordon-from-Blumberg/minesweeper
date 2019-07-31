@@ -14,7 +14,7 @@
         "y": 8
       },
       "icon": "playIcon",
-      "iconTextSpace": 16,
+      "textMargin": 16,
       "textStyle": {
         "fill": ["#444", "#888", "#444"],
         "fontSize": 64
