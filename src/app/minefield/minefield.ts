@@ -4,7 +4,6 @@ import { Cell } from './cell';
 import { ConfigService } from '../config/config-service';
 import { Resources } from '../util/resources';
 import { randInt } from '../functions/functions';
-import { threadId } from 'worker_threads';
 
 export class Minefield {
   private readonly cellGrid: Cell[][] = [];
