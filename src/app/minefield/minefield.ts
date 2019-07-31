@@ -4,15 +4,23 @@ import { Cell } from './cell';
 import { ConfigService } from '../config/config-service';
 import { Resources } from '../util/resources';
 import { randInt } from '../functions/functions';
+import { threadId } from 'worker_threads';
 
 export class Minefield {
   private readonly cellGrid: Cell[][] = [];
   private config;
 
+  private explodedMine: Cell;
+
   private mineExploded: () => void;
   //use bound function to prevent errors
-  private cellOpened = this.openSiblingsOf.bind(this);
-  private cellMarked = this.adjustMarked.bind(this);
+  private onCellOpened = this.openSiblingsOf.bind(this);
+  private onCellMarked = this.adjustMarked.bind(this);
+  private onMineExploded = ((cell: Cell) => {
+    this.explodedMine = cell;
+    this.openMines();
+    this.mineExploded();
+  }).bind(this);
 
   scene: PIXI.Container;
 
@@ -55,9 +63,9 @@ export class Minefield {
 
         const cell = new Cell(i, j, 
           sprite, 'cell', 
-          this.mineExploded, 
-          this.cellOpened,
-          this.cellMarked
+          this.onMineExploded, 
+          this.onCellOpened,
+          this.onCellMarked
         );
         this.cellGrid[i][j] = cell;
       }
@@ -88,23 +96,30 @@ export class Minefield {
     //y position delta of number is the same for each cell
     const dy = (this.config.cellSize - this.config.numberStyle.fontSize) / 2;
 
+    this.forEachCell(cell => {
+      if (!cell.hasMine && cell.siblingsWithMine > 0) {
+        cell.numberSprite = new PIXI.Text(
+          String(cell.siblingsWithMine),
+          this.config.numberStyle
+        );
+        cell.numberSprite.visible = false;
+
+        //x position delta of number may depend on the digit width
+        const dx = (this.config.cellSize - cell.numberSprite.width) / 2;          
+        cell.numberSprite.position.set(
+          cell.sprite.position.x + dx,
+          cell.sprite.position.y + dy
+        );
+        this.scene.addChild(cell.numberSprite);
+      }
+    });
+  }
+
+  //invoke the passed handler for each cell
+  private forEachCell(handler: (cell: Cell) => void) {
     for (const column of this.cellGrid) {
       for (const cell of column) {
-        if (!cell.hasMine && cell.siblingsWithMine > 0) {
-          cell.numberSprite = new PIXI.Text(
-            String(cell.siblingsWithMine),
-            this.config.numberStyle
-          );
-          cell.numberSprite.visible = false;
-
-          //x position delta of number may depend on the digit width
-          const dx = (this.config.cellSize - cell.numberSprite.width) / 2;          
-          cell.numberSprite.position.set(
-            cell.sprite.position.x + dx,
-            cell.sprite.position.y + dy
-          );
-          this.scene.addChild(cell.numberSprite);
-        }
+        handler(cell);
       }
     }
   }
@@ -128,9 +143,9 @@ export class Minefield {
     this.openedCellCount++;
 
     //do not open siblings if among them there is a mine
-    if (cell.siblingsWithMine === 0) {
+    if (cell.siblingsWithMine === 0 && !cell.hasMine) {
       this.forEachSiblingOf(cell, sibling => {
-        if (!sibling.opened && !sibling.hasMine) {
+        if (!sibling.opened && !sibling.hasMine && !sibling.marked) {
           sibling.open();
         }
       });
@@ -140,5 +155,13 @@ export class Minefield {
   private adjustMarked(cell: Cell) {
     if (cell.marked) this.markedCellCount++;
     else this.markedCellCount--;
+  }
+
+  private openMines() {
+    this.forEachCell(cell => {
+      if (!cell.opened && cell.hasMine) {
+        cell.open();
+      }
+    });
   }
 }

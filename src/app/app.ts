@@ -17,7 +17,7 @@ export class App {
     });
 
     //disable context menu
-    //app.view.addEventListener('contextmenu', (e) => e.preventDefault());
+    app.view.addEventListener('contextmenu', (e) => e.preventDefault());
   
     document.getElementById('container').appendChild(app.view);
 
@@ -34,6 +34,8 @@ export class App {
       .add('flag-hl', 'flag-hl.png')
       .add('mine', 'mine.png')
       .add('mine-hl', 'mine-hl.png')
+      .add('mine-marked', 'mine-marked.png')
+      .add('mine-marked-hl', 'mine-marked-hl.png')
       .add('mine-explosion', 'mine-explosion.png')
       .add('mine-explosion-hl', 'mine-explosion-hl.png')
       .add('minefield1', 'minefield1.png')

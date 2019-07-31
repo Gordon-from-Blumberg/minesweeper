@@ -6,9 +6,11 @@ export class Cell {
   private static readonly HL_SUFFIX = '-hl';
 
   //events
-  private mineExploded: () => void;
+  private mineExploded: (cell: Cell) => void;
   private cellOpened: (cell: Cell) => void;
   private cellMarked: (cell: Cell) => void;
+
+  private hovered = false;
 
   x: number;
   y: number;
@@ -22,7 +24,7 @@ export class Cell {
 
   constructor(x: number, y: number, 
               sprite: Sprite, currentTexture: string,
-              mineExploded: () => void,
+              mineExploded: (cell: Cell) => void,
               cellOpened: (cell: Cell) => void,
               cellMarked: (cell: Cell) => void) {
     this.x = x;
@@ -38,16 +40,21 @@ export class Cell {
 
   setTexture(name: string) {
     this.currentTexture = name;
-    this.sprite.texture = Resources.get(name);
+    this.sprite.texture = Resources.get(this.hovered
+        ? name + Cell.HL_SUFFIX
+        : name
+    );
   }
 
   open() {
-    if (this.marked) {
-      return;
-    }
-
     this.opened = true;
-    this.setTexture('cell-opened');
+    this.setTexture( this.hasMine && this.marked 
+        ? 'mine-marked' 
+        : this.hasMine
+            ? 'mine'
+            : 'cell-opened'
+    );
+
     //show number if it exists
     if (this.numberSprite) {
       this.numberSprite.visible = true;
@@ -60,29 +67,30 @@ export class Cell {
     const sprite = this.sprite;
 
     //hightlight cell when cursor above
-    sprite.on('mouseover', () => sprite.texture = Resources.get(this.currentTexture + Cell.HL_SUFFIX));
-    sprite.on('mouseout', () => sprite.texture = Resources.get(this.currentTexture));
+    sprite.on('mouseover', () => {
+      this.hovered = true;
+      sprite.texture = Resources.get(this.currentTexture + Cell.HL_SUFFIX);
+    });
+    sprite.on('mouseout', () => {
+      this.hovered = false;
+      sprite.texture = Resources.get(this.currentTexture);
+    });
 
     sprite.on('click', () => {
-      if (this.marked) {
-        return; // do nothing if cell is marked
-      }
+      if (!this.marked) {
+        this.open();        
 
-      if (this.hasMine) {
-        this.setTexture('mine'); //show mine
-        this.mineExploded();  //trigger event
-
-      } else {
-
-        this.open();
-      }
+        if (this.hasMine) {
+          this.mineExploded(this);  // trigger event
+        }
+      }  
     });
 
     sprite.on('rightclick', (e: interaction.InteractionEvent) => {
       if (!this.opened) {
         this.marked = !this.marked;
         this.setTexture(this.marked ? 'flag' : 'cell');
-        this.cellMarked(this);
+        this.cellMarked(this); // trigger event
       }
       e.data.originalEvent.preventDefault();
     });
