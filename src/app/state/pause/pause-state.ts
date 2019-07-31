@@ -21,7 +21,7 @@ export class PauseState extends AbstractState {
     );
     this.scene.addChild(backgroundSprite);
 
-    const buttonCfg = config.mainMenu.playButton;
+    const buttonCfg = config.mainMenu.playButton; // todo: use pause config
     const resumeButton = new InfoBlock()
         .background( this.createButtonBackground(buttonCfg) )
         .setPadding(buttonCfg.padding)
