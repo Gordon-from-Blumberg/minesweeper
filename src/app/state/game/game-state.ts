@@ -4,6 +4,7 @@ import { AbstractState } from '../abstract-state';
 import { ConfigService } from '../../config/config-service';
 import { Minefield } from '../../minefield/minefield';
 import { Resources } from '../../util/resources';
+import { InfoBlock } from '../../components/info-block';
 
 export class GameState extends AbstractState {
   private readonly MS_PER_SECOND = 1000;
@@ -11,12 +12,12 @@ export class GameState extends AbstractState {
   private config;
 
   private gameInfo: PIXI.Container;
-  private pauseButton;
+  private pauseButton: InfoBlock;
 
-  private timeInfo: PIXI.Text;
+  private timeInfo: InfoBlock;
   private time = 0;
 
-  private minesInfo: PIXI.Text;
+  private minesInfo: InfoBlock;
 
   private minefield: Minefield;
 
@@ -26,44 +27,38 @@ export class GameState extends AbstractState {
 
   init() {
     this.config = ConfigService.getInstance().getConfig();
-    const gameCfg = this.config.game;
+    const buttonsCfg = this.config.game.buttons;
 
     const background = new PIXI.TilingSprite(
-      Resources.get(gameCfg.background),
+      Resources.get(this.config.game.background),
       this.config.screenWidth,
       this.config.screenHeight
     );
     this.scene.addChild(background);
 
     this.gameInfo = new PIXI.Container();
-    this.scene.addChild(this.gameInfo);
 
-    let blockPositionX = gameCfg.buttons.x;
-
-    this.pauseButton = this.createBlock(
-      gameCfg.buttons.pauseWidth,
-      new PIXI.Text('PAUSE', gameCfg.textStyle),
-      gameCfg.buttons.pauseIcon
+    // create pause button
+    let positionX = 0;
+    this.pauseButton = this.createInfoBlock(
+      'PAUSE', 
+      true, 
+      buttonsCfg.pauseIcon, 
+      buttonsCfg.textMargin
     );
-
-    this.pauseButton.position.set(blockPositionX, gameCfg.buttons.y);
-    this.pauseButton.interactive = true;
-    this.pauseButton.buttonMode = true;
     this.gameInfo.addChild(this.pauseButton);
 
-    blockPositionX += this.pauseButton.width + gameCfg.buttons.marginX;
-
-    this.timeInfo = new PIXI.Text('Time: 0000', gameCfg.textStyle);
-    const timeInfoBlock = this.createBlock(gameCfg.buttons.timeInfoWidth, this.timeInfo);
-    timeInfoBlock.position.set(blockPositionX, gameCfg.buttons.y);
-    this.gameInfo.addChild(timeInfoBlock);
+    // create info block with timer
+    positionX += this.pauseButton.width + buttonsCfg.marginX;
+    this.timeInfo = this.createInfoBlock('Time: 0000', false);
+    this.timeInfo.position.x = positionX;
+    this.gameInfo.addChild(this.timeInfo);
     
-    blockPositionX += timeInfoBlock.width + gameCfg.buttons.marginX;
-    
-    this.minesInfo = new PIXI.Text('Mines left: 0000', gameCfg.textStyle);
-    const minesInfoBlock = this.createBlock(gameCfg.buttons.minesInfoWidth, this.minesInfo);
-    minesInfoBlock.position.set(blockPositionX, gameCfg.buttons.y);
-    this.gameInfo.addChild(minesInfoBlock);
+    // create info block with mine count
+    positionX += this.timeInfo.width + buttonsCfg.marginX;    
+    this.minesInfo = this.createInfoBlock('Mines left: 0000', false);
+    this.minesInfo.position.x = positionX;
+    this.gameInfo.addChild(this.minesInfo);
 
     const minefieldScene = new PIXI.Container();
     this.minefield = new Minefield(minefieldScene, () => void 0);
@@ -73,6 +68,12 @@ export class GameState extends AbstractState {
     );
     this.scene.addChild(minefieldScene);
 
+    this.gameInfo.position.set(
+      (this.config.screenWidth - this.gameInfo.width) / 2,
+      buttonsCfg.y
+    );
+    this.scene.addChild(this.gameInfo);
+
     this.pauseButton.on('click', () => this.stateChanged('pause'));
     window.addEventListener('keydown', this.keyDownHandler.bind(this), false);
   }
@@ -81,30 +82,33 @@ export class GameState extends AbstractState {
     this.time += dms;
 
     // operation ^ 0 removes digits right to point
-    this.timeInfo.text = `Time: ${this.time / this.MS_PER_SECOND ^ 0}`;
+    this.timeInfo.setText(`Time: ${this.time / this.MS_PER_SECOND ^ 0}`);
 
-    this.minesInfo.text = `Mines left: ${this.minefield.minesLeft}`;
+    this.minesInfo.setText(`Mines left: ${this.minefield.minesLeft}`);
   }
 
-  private createBlock(width: number, text: PIXI.Text, icon?: string): PIXI.Graphics {
+  private createInfoBlock(text: string, buttonMode: boolean, icon?: string, textMargin?): InfoBlock {
     const buttonsCfg = this.config.game.buttons;
-    const block: PIXI.Graphics = new PIXI.Graphics();
-    let textPositionX = buttonsCfg.padding.x;
+    const bgGraphics: PIXI.Graphics = this.createInfoBlockBackground();
+    const infoBlock = new InfoBlock()
+      .background(bgGraphics)
+      .setPadding(buttonsCfg.padding)
+      .setButtonMode(buttonMode);    
 
     if (icon) {
-      const iconSprite = new PIXI.Sprite(Resources.get(icon));
-      iconSprite.position.set(buttonsCfg.padding.x, buttonsCfg.padding.y);
-      block.addChild(iconSprite);
-      textPositionX += iconSprite.width + buttonsCfg.iconTextSpace;
+      infoBlock.addIcon(icon);
     }
 
-    text.position.set(textPositionX, buttonsCfg.padding.y);
-    block.addChild(text);
+    return infoBlock
+      .addText(text, buttonsCfg.textMargin, buttonsCfg.textStyle)
+      .finishBuild();
+  }
 
-    return block
+  private createInfoBlockBackground(): PIXI.Graphics {
+    return new PIXI.Graphics()
       .beginFill(0x77bbee)
       .lineStyle(1, 0x888888)
-      .drawRoundedRect(0, 0, width, buttonsCfg.height, 4)
+      .drawRoundedRect(0, 0, this.config.game.buttons.bgWidth, this.config.game.buttons.bgHeight, 4)
       .endFill();
   }
 

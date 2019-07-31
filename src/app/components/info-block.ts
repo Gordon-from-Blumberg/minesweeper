@@ -141,7 +141,7 @@ export class InfoBlock extends PIXI.Container {
     return this;
   }
 
-  setText(text: string, recalculate: boolean) {
+  setText(text: string, recalculate?: boolean) {
     this.textComponent.text = text;
     if (recalculate) {
       this.recalculate();
