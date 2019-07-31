@@ -21,22 +21,44 @@ export class PauseState extends AbstractState {
     );
     this.scene.addChild(backgroundSprite);
 
-    const buttonCfg = config.mainMenu.playButton; // todo: use pause config
+    const buttonContainer = new PIXI.Container();
+    const cfg = config.pause; 
     const resumeButton = new InfoBlock()
-        .background( this.createButtonBackground(buttonCfg) )
-        .setPadding(buttonCfg.padding)
+        .background( this.createButtonBackground(cfg.resumeButton) )
+        .setPadding(cfg.resumeButton.padding)
         .setButtonMode(true)
         .addIcon('play-icon')
-        .addText('RESUME', { x: buttonCfg.textMargin }, buttonCfg.textStyle)
-        .finishBuild();
+        .addText('RESUME', { x: cfg.resumeButton.textMargin }, cfg.resumeButton.textStyle)
+        .finishBuild();    
     
+    buttonContainer.addChild(resumeButton);
+
+    const mainMenuButton = new InfoBlock()
+      .background( this.createButtonBackground(cfg.mainMenuButton) )
+      .setPadding(cfg.mainMenuButton.padding)
+      .setButtonMode(true)
+      .addText('MAIN MENU', {}, cfg.mainMenuButton.textStyle)
+      .finishBuild();
+
+    buttonContainer.addChild(mainMenuButton);
+
     resumeButton.position.set(
-      (config.screenWidth - resumeButton.width) / 2,
-      (config.screenHeight - resumeButton.height) / 2
+      (buttonContainer.width - resumeButton.width) / 2,
+      0
     );
-    this.scene.addChild(resumeButton);
+    mainMenuButton.position.set(
+      (buttonContainer.width - mainMenuButton.width) / 2,
+      resumeButton.height + cfg.mainMenuButton.marginY
+    );
+
+    buttonContainer.position.set(
+      (config.screenWidth - buttonContainer.width) / 2,
+      (config.screenHeight - buttonContainer.height) / 2
+    );
+    this.scene.addChild(buttonContainer);
 
     resumeButton.on('click', () => this.stateChanged('game'));
+    mainMenuButton.on('click', () => this.stateChanged('mainMenu'));
   }
 
   update(dtime: number, dms: number) {

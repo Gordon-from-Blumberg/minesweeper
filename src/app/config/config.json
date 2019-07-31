@@ -58,7 +58,34 @@
   },
 
   "pause": {
-    "background": "pause-background"
+    "background": "pause-background",
+    "resumeButton": {
+      "width": 300,
+      "height": 80,
+      "padding": {
+        "x": 16,
+        "y": 8
+      },
+      "icon": "play-icon",
+      "textMargin": 16,
+      "textStyle": {
+        "fill": ["#444", "#888", "#444"],
+        "fontSize": 64
+      }
+    },
+    "mainMenuButton": {
+      "width": 300,
+      "height": 80,
+      "padding": {
+        "x": 16,
+        "y": 8
+      },
+      "textStyle": {
+        "fill": ["#444", "#888", "#444"],
+        "fontSize": 42
+      },
+      "marginY": 20
+    }
   },
 
   "end": {
