@@ -25,10 +25,9 @@ export class App {
 
     app.loader.baseUrl = 'assets/images/';
     app.loader
-      .add('spritesheet.json')
-
+      .add(config.spritesheet)
       .load((loader, resources) => {
-        Resources.setResources(resources);
+        Resources.setResources(resources, config.spritesheet);
         Messages.loadMessages('EN');
 
         const stateManager = new StateManager();

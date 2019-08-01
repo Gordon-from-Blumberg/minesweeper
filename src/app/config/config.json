@@ -1,6 +1,7 @@
 {
   "screenWidth": 800,
   "screenHeight": 600,
+  "spritesheet": "spritesheet.json",
 
   "buttonTexture": "label",
 
