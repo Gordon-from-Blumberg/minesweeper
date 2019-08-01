@@ -40,6 +40,7 @@ export class App {
       .add('mine-explosion', 'mine-explosion.png')
       .add('mine-explosion-hl', 'mine-explosion-hl.png')
       .add('minefield', 'minefield.png')
+      .add('label-caution', 'label-caution.png')
       .add('barbed-wire', 'barbed-wire.png')
       .add('play-icon', 'play-icon.png')
       .add('pause-icon', 'pause-icon.png')

@@ -19,6 +19,23 @@
         "fill": ["#444", "#888", "#444"],
         "fontSize": 64
       }
+    },
+    "labelCaution": {
+      "texture": "label-caution",
+      "text1": {
+        "x": 565,
+        "y": 180
+      },
+      "text2": {
+        "x": 530,
+        "y": 268
+      },
+      "textStyle": {
+        "fontSize": 46,
+        "fill": ["#955", "#822"],
+        "stroke": "#333",
+        "strokeThickness": 2
+      }
     }
   },
 

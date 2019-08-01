@@ -6,8 +6,6 @@ import { Resources } from '../../util/resources';
 import { InfoBlock } from '../../components/info-block';
 
 export class MainMenuState extends AbstractState {
-  private readonly BUTTON_BORDER_COLOR = 0xa58830;
-  private readonly BUTTON_BORDER_HOVERED_COLOR = 0xc5a850;
 
   private config;
 
@@ -29,9 +27,17 @@ export class MainMenuState extends AbstractState {
     );
     this.scene.addChild(background);
 
-    const icon = new PIXI.Sprite(Resources.get('minefield'));
+    const icon = new PIXI.Sprite(Resources.get(mainMenuCfg.labelCaution.texture));
     icon.position.set(this.scene.width - icon.width, this.scene.height - icon.height);
     this.scene.addChild(icon);
+
+    const text1 = new PIXI.Text('MINES!', mainMenuCfg.labelCaution.textStyle);
+    text1.position.set(mainMenuCfg.labelCaution.text1.x, mainMenuCfg.labelCaution.text1.y);
+    this.scene.addChild(text1);
+
+    const text2 = new PIXI.Text('DANGER!', mainMenuCfg.labelCaution.textStyle);
+    text2.position.set(mainMenuCfg.labelCaution.text2.x, mainMenuCfg.labelCaution.text2.y);
+    this.scene.addChild(text2);
 
     const playButtonCfg = mainMenuCfg.playButton;
     this.playButton = new InfoBlock()
@@ -44,21 +50,10 @@ export class MainMenuState extends AbstractState {
     this.playButton.position.set(playButtonCfg.x, playButtonCfg.y);
     this.scene.addChild(this.playButton);
 
-    //todo: hightlight on hover does not work
-    //this.playButton.on('mouseover', () => this.playButtonHovered = true);
-    //this.playButton.on('mouseout', () => this.playButtonHovered = false);
-
     this.playButton.on('click', () => this.stateChanged('game', true));
   }
   
   update(dtime: number, dms: number) {
-    // const lineColor = this.playButton.line.color;
-    // if (this.playButtonHovered && lineColor < this.BUTTON_BORDER_HOVERED_COLOR) {
-    //   this.drawPlayButton(lineColor + 0x010101);
-
-    // } else if (!this.playButtonHovered && lineColor > this.BUTTON_BORDER_COLOR) {
-    //   this.drawPlayButton(lineColor - 0x010101);
-    // }
   }
 
   private createPlayButtonBackground(): PIXI.Graphics {

@@ -13,6 +13,8 @@ export class EndState extends AbstractState {
   private loseContainer: PIXI.Container;
 
   private config;
+
+  private fireworks: PIXI.Sprite[] = [];
   
   constructor(scene: PIXI.Container) {
     super('end', scene);
@@ -45,6 +47,7 @@ export class EndState extends AbstractState {
       this.loseContainer.visible = true;
       this.victoryContainer.visible = false;
     }
+    this.victory = data.victory;
   }
 
   private createVictoryContainer(): PIXI.Container {
