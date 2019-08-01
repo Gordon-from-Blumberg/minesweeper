@@ -57,7 +57,7 @@
     "minefield": {
       "columns": 30,
       "rows": 20,
-      "minesCount": 50,
+      "minesCount": 10,
       "cellSize": 20,
       "cellMargin": 4,
       "numberStyle": {

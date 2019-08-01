@@ -4,6 +4,7 @@ import { AbstractState } from '../abstract-state';
 import { ConfigService } from '../../config/config-service';
 import { Resources } from '../../util/resources';
 import { InfoBlock } from '../../components/info-block';
+import { Messages } from '../../message/messages';
 
 export class EndState extends AbstractState {
   private victory = false;
@@ -38,11 +39,11 @@ export class EndState extends AbstractState {
 
   }
 
-  activate(data: {victory: boolean, time?: number}) {
+  activate(data: {victory: boolean, time?: string}) {
     if (data.victory) {
       this.victoryContainer.visible = true;
       this.loseContainer.visible = false;
-      this.timeText.text = `Your time is ${ data.time }s`
+      this.timeText.text = Messages.get('yourTime', data.time);
     } else {
       this.loseContainer.visible = true;
       this.victoryContainer.visible = false;
@@ -56,10 +57,10 @@ export class EndState extends AbstractState {
     container.visible = false;
     this.scene.addChild(container);
 
-    const text = new PIXI.Text('YOU WON!', cfg.textStyle);
+    const text = new PIXI.Text(Messages.get('youWon'), cfg.textStyle);
     container.addChild(text);
 
-    this.timeText = new PIXI.Text('Your time is 0000s', cfg.timeTextStyle);
+    this.timeText = new PIXI.Text(Messages.get('yourTime', '0000'), cfg.timeTextStyle);
     container.addChild(this.timeText);
 
     const victoryCupSprite = new PIXI.Sprite( Resources.get(cfg.victoryCupTexture) );
@@ -70,7 +71,7 @@ export class EndState extends AbstractState {
         .setPadding(cfg.playAgainButton.padding)
         .setButtonMode(true)
         .addIcon(cfg.playAgainButton.icon, {}, { x: cfg.playAgainButton.iconSize, y: cfg.playAgainButton.iconSize })
-        .addText('PLAY AGAIN', { x: cfg.playAgainButton.marginTextX }, cfg.playAgainButton.textStyle)
+        .addText(Messages.get('playAgain'), { x: cfg.playAgainButton.marginTextX }, cfg.playAgainButton.textStyle)
         .finishBuild();
     container.addChild(playAgainButton);
 
@@ -99,14 +100,14 @@ export class EndState extends AbstractState {
     container.visible = false;
     this.scene.addChild(container);
 
-    const text = new PIXI.Text('YOU LOSE...', cfg.textStyle);
+    const text = new PIXI.Text(Messages.get('youLose'), cfg.textStyle);
     container.addChild(text);
 
     const tryAgainButton = new InfoBlock()
         .background( this.config.buttonTexture )
         .setPadding(cfg.button.padding)
         .setButtonMode(true)
-        .addText('TRY AGAIN', {}, cfg.button.textStyle)
+        .addText(Messages.get('tryAgain'), {}, cfg.button.textStyle)
         .finishBuild();
     container.addChild(tryAgainButton);
 

@@ -5,6 +5,7 @@ import { ConfigService } from '../../config/config-service';
 import { Minefield } from '../../minefield/minefield';
 import { Resources } from '../../util/resources';
 import { InfoBlock } from '../../components/info-block';
+import { Messages } from '../../message/messages';
 
 export class GameState extends AbstractState {
   private readonly MS_PER_SECOND = 1000;
@@ -43,13 +44,13 @@ export class GameState extends AbstractState {
 
     // create info block with timer
     let positionX = 0;
-    this.timeInfo = this.createInfoBlock('Time: 0000', false);
+    this.timeInfo = this.createInfoBlock(Messages.get('time', '0000'), false);
     this.timeInfo.position.x = positionX;
     this.gameInfo.addChild(this.timeInfo);
     
     // create info block with mine count
     positionX += this.timeInfo.width + buttonsCfg.marginX;    
-    this.minesInfo = this.createInfoBlock('Mines left: 0000', false);
+    this.minesInfo = this.createInfoBlock(Messages.get('minesLeft', '0000'), false);
     this.minesInfo.position.x = positionX;
     this.gameInfo.addChild(this.minesInfo);
 
@@ -59,7 +60,7 @@ export class GameState extends AbstractState {
         .setButtonMode(true)
         .setPadding(this.config.game.pauseButton.padding)
         .addIcon(this.config.game.pauseButton.icon)
-        .addText('PAUSE', this.config.game.pauseButton.textMargin, this.config.game.pauseButton.textStyle)
+        .addText(Messages.get('pause'), this.config.game.pauseButton.textMargin, this.config.game.pauseButton.textStyle)
         .finishBuild();
 
     this.scene.addChild(this.pauseButton);
@@ -79,7 +80,7 @@ export class GameState extends AbstractState {
     this.scene.addChild(this.gameInfo);
 
     this.pauseButton.on('click', () => this.stateChanged('pause'));
-    window.addEventListener('keydown', this.keyDownHandler.bind(this), false);
+    // todo: set pause on space press
   }
 
   update(dtime: number, dms: number) {
@@ -87,9 +88,9 @@ export class GameState extends AbstractState {
       this.time += dms;
 
       // operation ^ 0 removes digits right to point
-      this.timeInfo.setText(`Time: ${ this.getSeconds() }`);
+      this.timeInfo.setText(Messages.get('time', this.getSeconds()));
 
-      this.minesInfo.setText(`Mines left: ${this.minefield.minesLeft}`);
+      this.minesInfo.setText(Messages.get('minesLeft', this.minefield.minesLeft));
     }
   }
 
@@ -141,14 +142,7 @@ export class GameState extends AbstractState {
       .endFill();
   }
 
-  private keyDownHandler(event: KeyboardEvent) {
-    if (event.code === "Space") {
-      this.stateChanged('pause');
-      event.preventDefault();
-    }
-  }
-
-  private getSeconds(): number {
-    return this.time / this.MS_PER_SECOND ^ 0;
+  private getSeconds(): string {
+    return String(this.time / this.MS_PER_SECOND ^ 0);
   }
 }

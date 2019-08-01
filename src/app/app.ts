@@ -7,6 +7,7 @@ import { PauseState } from './state/pause/pause-state';
 import { ConfigService } from './config/config-service';
 import { Resources } from './util/resources';
 import { EndState } from './state/end/end-state';
+import { Messages } from './message/messages';
 
 export class App {
   static init(): void {
@@ -24,31 +25,11 @@ export class App {
 
     app.loader.baseUrl = 'assets/images/';
     app.loader
-      .add('main-menu-background', 'main-menu-background.png')
-      .add('game-background', 'game-background.png')
-      .add('pause-background', 'pause-background.png')
-      .add('cell', 'cell.png')
-      .add('cell-hl', 'cell-hl.png')
-      .add('cell-opened', 'cell-opened.png')
-      .add('cell-opened-hl', 'cell-opened-hl.png')
-      .add('flag', 'flag.png')
-      .add('flag-hl', 'flag-hl.png')
-      .add('mine', 'mine.png')
-      .add('mine-hl', 'mine-hl.png')
-      .add('mine-marked', 'mine-marked.png')
-      .add('mine-marked-hl', 'mine-marked-hl.png')
-      .add('mine-explosion', 'mine-explosion.png')
-      .add('mine-explosion-hl', 'mine-explosion-hl.png')
-      .add('minefield', 'minefield.png')
-      .add('label-caution', 'label-caution.png')
-      .add('barbed-wire', 'barbed-wire.png')
-      .add('play-icon', 'play-icon.png')
-      .add('pause-icon', 'pause-icon.png')
-      .add('victory-cup', 'victory-cup.png')
-      .add('label', 'label.png')
+      .add('spritesheet.json')
 
       .load((loader, resources) => {
         Resources.setResources(resources);
+        Messages.loadMessages('EN');
 
         const stateManager = new StateManager();
         

@@ -7,7 +7,8 @@ export class Resources {
     this.resources = resources;
   }
 
-  static get(name: string): Texture {
-    return this.resources[name].texture;
+  static get(name: string, extension: string = 'png'): Texture {
+    console.dir(this.resources);
+    return this.resources['spritesheet.json'].textures[name + '.' + extension];
   }
 }

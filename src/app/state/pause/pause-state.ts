@@ -4,6 +4,7 @@ import { AbstractState } from '../abstract-state';
 import { ConfigService } from '../../config/config-service';
 import { Resources } from '../../util/resources';
 import { InfoBlock } from '../../components/info-block';
+import { Messages } from '../../message/messages';
 
 export class PauseState extends AbstractState {
 
@@ -28,7 +29,7 @@ export class PauseState extends AbstractState {
         .setPadding(cfg.resumeButton.padding)
         .setButtonMode(true)
         .addIcon(cfg.resumeButton.icon)
-        .addText('RESUME', { x: cfg.resumeButton.textMargin }, cfg.resumeButton.textStyle)
+        .addText(Messages.get('resume'), { x: cfg.resumeButton.textMargin }, cfg.resumeButton.textStyle)
         .finishBuild();    
     
     buttonContainer.addChild(resumeButton);
@@ -37,7 +38,7 @@ export class PauseState extends AbstractState {
       .background( config.buttonTexture )
       .setPadding(cfg.mainMenuButton.padding)
       .setButtonMode(true)
-      .addText('MAIN MENU', {}, cfg.mainMenuButton.textStyle)
+      .addText(Messages.get('mainMenu'), {}, cfg.mainMenuButton.textStyle)
       .finishBuild();
 
     buttonContainer.addChild(mainMenuButton);

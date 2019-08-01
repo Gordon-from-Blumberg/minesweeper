@@ -1,0 +1,15 @@
+{
+  "danger": "DANGER!",
+  "mines": "MINES!",
+  "play": "PLAY",
+  "pause": "PAUSE",
+  "resume": "RESUME",
+  "mainMenu": "MAIN MENU",
+  "time": "Time: %s",
+  "minesLeft": "Mines left: %s",
+  "youWon": "YOU WON!",
+  "yourTime": "Your time is %ss",
+  "playAgain": "PLAY AGAIN",
+  "youLose": "YOU LOSE...",
+  "tryAgain": "TRY AGAIN"
+}

@@ -29,8 +29,8 @@ export class Minefield {
   private openedCellCount = 0;
   private cellCount = 0;
 
-  get minesLeft() {
-    return this.minesCount - this.markedCellCount;
+  get minesLeft(): string {
+    return String(this.minesCount - this.markedCellCount);
   }
 
   constructor(scene: PIXI.Container, onVictory: () => void, onLose: () => void) {
