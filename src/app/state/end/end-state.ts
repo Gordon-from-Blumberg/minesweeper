@@ -66,11 +66,7 @@ export class EndState extends AbstractState {
     container.addChild(victoryCupSprite);
 
     const playAgainButton = new InfoBlock()
-        .background( new PIXI.Graphics()
-            .beginFill(+cfg.playAgainButton.bgColorHexString)
-            .lineStyle(cfg.playAgainButton.borderWidth, +cfg.playAgainButton.borderColorHexString)
-            .drawRoundedRect(0, 0, 300, 80, 20)
-            .endFill() )
+        .background( this.config.buttonTexture )
         .setPadding(cfg.playAgainButton.padding)
         .setButtonMode(true)
         .addIcon(cfg.playAgainButton.icon, {}, { x: cfg.playAgainButton.iconSize, y: cfg.playAgainButton.iconSize })
@@ -107,11 +103,7 @@ export class EndState extends AbstractState {
     container.addChild(text);
 
     const tryAgainButton = new InfoBlock()
-        .background( new PIXI.Graphics()
-            .beginFill(+cfg.button.bgColorHexString)
-            .lineStyle(5, +cfg.button.borderColorHexString)
-            .drawRoundedRect(0, 0, 250, 76, 20)
-            .endFill() )
+        .background( this.config.buttonTexture )
         .setPadding(cfg.button.padding)
         .setButtonMode(true)
         .addText('TRY AGAIN', {}, cfg.button.textStyle)

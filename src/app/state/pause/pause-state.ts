@@ -24,17 +24,17 @@ export class PauseState extends AbstractState {
     const buttonContainer = new PIXI.Container();
     const cfg = config.pause; 
     const resumeButton = new InfoBlock()
-        .background( this.createButtonBackground(cfg.resumeButton) )
+        .background( config.buttonTexture )
         .setPadding(cfg.resumeButton.padding)
         .setButtonMode(true)
-        .addIcon('play-icon')
+        .addIcon(cfg.resumeButton.icon)
         .addText('RESUME', { x: cfg.resumeButton.textMargin }, cfg.resumeButton.textStyle)
         .finishBuild();    
     
     buttonContainer.addChild(resumeButton);
 
     const mainMenuButton = new InfoBlock()
-      .background( this.createButtonBackground(cfg.mainMenuButton) )
+      .background( config.buttonTexture )
       .setPadding(cfg.mainMenuButton.padding)
       .setButtonMode(true)
       .addText('MAIN MENU', {}, cfg.mainMenuButton.textStyle)
@@ -62,13 +62,5 @@ export class PauseState extends AbstractState {
   }
 
   update(dtime: number, dms: number) {
-  }
-
-  private createButtonBackground(cfg): PIXI.Graphics {
-    return new PIXI.Graphics()
-      .beginFill(0x80aaff)
-      .lineStyle(5, 0xa58830)
-      .drawRoundedRect(0, 0, cfg.width, cfg.height, 20)
-      .endFill();
   }
 }

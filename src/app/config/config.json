@@ -115,8 +115,6 @@
   "pause": {
     "background": "pause-background",
     "resumeButton": {
-      "width": 300,
-      "height": 80,
       "padding": {
         "x": 16,
         "y": 8
@@ -124,20 +122,22 @@
       "icon": "play-icon",
       "textMargin": 16,
       "textStyle": {
-        "fill": ["#444", "#888", "#444"],
-        "fontSize": 64
+        "fontSize": 64,
+        "fill": ["#955", "#822"],
+        "stroke": "#333",
+        "strokeThickness": 2
       }
     },
     "mainMenuButton": {
-      "width": 300,
-      "height": 80,
       "padding": {
         "x": 16,
         "y": 8
       },
       "textStyle": {
-        "fill": ["#444", "#888", "#444"],
-        "fontSize": 42
+        "fontSize": 42,
+        "fill": ["#955", "#822"],
+        "stroke": "#333",
+        "strokeThickness": 2
       },
       "marginY": 20
     }
@@ -162,9 +162,7 @@
       },
       "victoryCupTexture": "victory-cup",
       "playAgainButton": {
-        "bgColorHexString": "0x80aaff",
         "borderWidth": 3,
-        "borderColorHexString": "0xa58830",
         "padding": {
           "x": 16,
           "y": 8
@@ -173,7 +171,9 @@
         "iconSize": 30,
         "textStyle": {
           "fontSize": 30,
-          "fill": ["#333", "#888", "#333"],
+          "fill": ["#955", "#822"],
+          "stroke": "#333",
+          "strokeThickness": 2,
           "fontWeight": 600
         },
         "marginTextX": 12,
@@ -191,15 +191,15 @@
         "strokeThickness": 5
       },
       "button": {
-        "bgColorHexString": "0x80aaff",
-        "borderColorHexString": "0xa58830",
         "padding": {
           "x": 16,
           "y": 8
         },
         "textStyle": {
           "fontSize": 42,
-          "fill": ["#333", "#888", "#333"],
+          "fill": ["#955", "#822"],
+          "stroke": "#333",
+          "strokeThickness": 2,
           "fontWeight": 600
         },
         "marginY": 20
