@@ -57,12 +57,22 @@
     "minefield": {
       "columns": 30,
       "rows": 20,
-      "minesCount": 10,
+      "minesCount": 50,
       "cellSize": 20,
       "cellMargin": 4,
       "numberStyle": {
-        "fontSize": 16,
-        "fontWeight": 600
+        "fontSize": 18,
+        "fontWeight": 900,
+        "colors": [
+          "#55d",
+          "#0a0",
+          "#f00",
+          "#008",
+          "#800",
+          "#080",
+          "#880",
+          "#444"
+        ]
       }
     },
 

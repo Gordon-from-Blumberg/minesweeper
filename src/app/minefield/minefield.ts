@@ -103,7 +103,11 @@ export class Minefield {
       if (!cell.hasMine && cell.siblingsWithMine > 0) {
         cell.numberSprite = new PIXI.Text(
           String(cell.siblingsWithMine),
-          this.config.numberStyle
+          {
+            fontSize: this.config.numberStyle.fontSize,
+            fontWeight: this.config.numberStyle.fontWeight,
+            fill: this.config.numberStyle.colors[cell.siblingsWithMine - 1]
+          }
         );
         cell.numberSprite.visible = false;
 
