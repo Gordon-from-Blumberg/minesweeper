@@ -2,6 +2,8 @@
   "screenWidth": 800,
   "screenHeight": 600,
 
+  "buttonTexture": "label",
+
   "mainMenu": {
     "background": "main-menu-background",
     "barbedWire": {
@@ -12,7 +14,6 @@
       "y": 400
     },
     "playButton": {
-      "bgTexture": "label",
       "x": 200,
       "y": 382,
       "rotation": 0.07,
@@ -64,6 +65,23 @@
         "fontWeight": 600
       }
     },
+
+    "pauseButton": {
+      "padding": {
+        "x": 10,
+        "y": 5
+      },
+      "icon": "pause-icon",
+      "textMargin": {
+        "x": 10
+      },
+      "textStyle": {
+        "fontSize": 30,
+        "fill": ["#955", "#822"],
+        "stroke": "#333",
+        "strokeThickness": 2
+      }
+    },
     
     "buttons": {
       "bgWidth": 150,
@@ -74,10 +92,9 @@
         "y": 4
       },
       "marginX": 12,
-      "pauseIcon": "pause-icon",
       "textStyle": {
-        "fill": ["#333", "#444", "#666", "#444"],
-        "fontSize": 24
+        "fontSize": 24,
+        "fill": ["#333", "#666", "#333"]
       },
       "textMargin": {
         "x": 8

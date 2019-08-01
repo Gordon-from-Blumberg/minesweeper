@@ -9,7 +9,6 @@ export class MainMenuState extends AbstractState {
 
   private config;
 
-  private playButtonHovered = false;
   private playButton: PIXI.Container;
 
   constructor(scene: PIXI.Container) {
@@ -49,7 +48,7 @@ export class MainMenuState extends AbstractState {
 
     const playButtonCfg = mainMenuCfg.playButton;
     this.playButton = new InfoBlock()
-        .background( mainMenuCfg.playButton.bgTexture )
+        .background( this.config.buttonTexture )
         .setPadding(playButtonCfg.padding)
         .setButtonMode(true)
         .addIcon(playButtonCfg.icon)
@@ -63,14 +62,5 @@ export class MainMenuState extends AbstractState {
   }
   
   update(dtime: number, dms: number) {
-  }
-
-  private createPlayButtonBackground(): PIXI.Graphics {
-    const cfg = this.config.mainMenu.playButton;
-    return new PIXI.Graphics()
-      .beginFill(0x80aaff)
-      .lineStyle(5, 0xa58830)
-      .drawRoundedRect(0, 0, cfg.width, cfg.height, 20)
-      .endFill();
   }
 }

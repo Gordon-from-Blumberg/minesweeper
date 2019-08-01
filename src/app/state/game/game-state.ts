@@ -39,20 +39,10 @@ export class GameState extends AbstractState {
     );
     this.scene.addChild(background);
 
-    this.gameInfo = new PIXI.Container();
-
-    // create pause button
-    let positionX = 0;
-    this.pauseButton = this.createInfoBlock(
-      'PAUSE', 
-      true, 
-      buttonsCfg.pauseIcon, 
-      buttonsCfg.textMargin
-    );
-    this.gameInfo.addChild(this.pauseButton);
+    this.gameInfo = new PIXI.Container();    
 
     // create info block with timer
-    positionX += this.pauseButton.width + buttonsCfg.marginX;
+    let positionX = 0;
     this.timeInfo = this.createInfoBlock('Time: 0000', false);
     this.timeInfo.position.x = positionX;
     this.gameInfo.addChild(this.timeInfo);
@@ -63,11 +53,23 @@ export class GameState extends AbstractState {
     this.minesInfo.position.x = positionX;
     this.gameInfo.addChild(this.minesInfo);
 
-    this.minefieldScene = new PIXI.Container();
-    this.minefieldScene.position.set(
-      (this.config.screenWidth - this.minefieldScene.width) / 2,
-      (this.config.screenHeight + this.gameInfo.height - this.minefieldScene.height) / 2
+    // create pause button
+    this.pauseButton = new InfoBlock()
+        .background(this.config.buttonTexture)
+        .setButtonMode(true)
+        .setPadding(this.config.game.pauseButton.padding)
+        .addIcon(this.config.game.pauseButton.icon)
+        .addText('PAUSE', this.config.game.pauseButton.textMargin, this.config.game.pauseButton.textStyle)
+        .finishBuild();
+
+    this.scene.addChild(this.pauseButton);
+    this.pauseButton.position.set(
+      (this.config.screenWidth - this.pauseButton.width) / 2,
+      this.config.screenHeight - this.pauseButton.height - buttonsCfg.y
     );
+
+    // create cotainer for minefield scene
+    this.minefieldScene = new PIXI.Container();
     this.scene.addChild(this.minefieldScene);
 
     this.gameInfo.position.set(
@@ -108,7 +110,7 @@ export class GameState extends AbstractState {
       );
       this.minefieldScene.position.set(
         (this.config.screenWidth - this.minefieldScene.width) / 2,
-        (this.config.screenHeight + this.gameInfo.height - this.minefieldScene.height) / 2
+        (this.config.screenHeight + this.gameInfo.height - this.minefieldScene.height - this.pauseButton.height) / 2
       );
       this.time = 0;
     }    
