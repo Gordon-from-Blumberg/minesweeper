@@ -27,9 +27,17 @@ export class MainMenuState extends AbstractState {
     );
     this.scene.addChild(background);
 
-    const icon = new PIXI.Sprite(Resources.get(mainMenuCfg.labelCaution.texture));
-    icon.position.set(this.scene.width - icon.width, this.scene.height - icon.height);
-    this.scene.addChild(icon);
+    const barbedWire = new PIXI.TilingSprite(
+      Resources.get(mainMenuCfg.barbedWire.texture),
+      mainMenuCfg.barbedWire.width,
+      mainMenuCfg.barbedWire.height
+    );
+    barbedWire.position.set(mainMenuCfg.barbedWire.x, mainMenuCfg.barbedWire.y);
+    this.scene.addChild(barbedWire);
+
+    const labelCaution = new PIXI.Sprite(Resources.get(mainMenuCfg.labelCaution.texture));
+    labelCaution.position.set(this.scene.width - labelCaution.width, this.scene.height - labelCaution.height);
+    this.scene.addChild(labelCaution);
 
     const text1 = new PIXI.Text('MINES!', mainMenuCfg.labelCaution.textStyle);
     text1.position.set(mainMenuCfg.labelCaution.text1.x, mainMenuCfg.labelCaution.text1.y);
@@ -41,13 +49,14 @@ export class MainMenuState extends AbstractState {
 
     const playButtonCfg = mainMenuCfg.playButton;
     this.playButton = new InfoBlock()
-        .background( this.createPlayButtonBackground() )
+        .background( mainMenuCfg.playButton.bgTexture )
         .setPadding(playButtonCfg.padding)
         .setButtonMode(true)
         .addIcon(playButtonCfg.icon)
         .addText('PLAY', { x: playButtonCfg.textMargin }, playButtonCfg.textStyle)
         .finishBuild();
     this.playButton.position.set(playButtonCfg.x, playButtonCfg.y);
+    this.playButton.rotation = playButtonCfg.rotation;
     this.scene.addChild(this.playButton);
 
     this.playButton.on('click', () => this.stateChanged('game', true));

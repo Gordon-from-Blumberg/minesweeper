@@ -38,7 +38,7 @@ export class InfoBlock extends PIXI.Container {
    * to use for the central background sprite
    */
   background(textures: string[] | string | PIXI.Graphics, useTilingSprite?: boolean): InfoBlock {
-    let bgTextures: string[];
+    let bgTextures: string[] = [];
     if (typeof textures === 'string') {
       bgTextures.push(textures);
     } else if (textures instanceof Array) {

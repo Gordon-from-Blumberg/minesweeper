@@ -4,11 +4,18 @@
 
   "mainMenu": {
     "background": "main-menu-background",
+    "barbedWire": {
+      "texture": "barbed-wire",
+      "width": 800,
+      "height": 120,
+      "x": 0,
+      "y": 400
+    },
     "playButton": {
+      "bgTexture": "label",
       "x": 200,
-      "y": 430,
-      "width": 280,
-      "height": 80,
+      "y": 382,
+      "rotation": 0.07,
       "padding": {
         "x": 16,
         "y": 8
@@ -16,8 +23,10 @@
       "icon": "play-icon",
       "textMargin": 16,
       "textStyle": {
-        "fill": ["#444", "#888", "#444"],
-        "fontSize": 64
+        "fontSize": 50,
+        "fill": ["#955", "#822"],
+        "stroke": "#333",
+        "strokeThickness": 2
       }
     },
     "labelCaution": {

@@ -45,6 +45,7 @@ export class App {
       .add('play-icon', 'play-icon.png')
       .add('pause-icon', 'pause-icon.png')
       .add('victory-cup', 'victory-cup.png')
+      .add('label', 'label.png')
 
       .load((loader, resources) => {
         Resources.setResources(resources);
