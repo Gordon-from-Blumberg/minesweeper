@@ -85,7 +85,7 @@ export class GameState extends AbstractState {
       this.time += dms;
 
       // operation ^ 0 removes digits right to point
-      this.timeInfo.setText(`Time: ${this.time / this.MS_PER_SECOND ^ 0}`);
+      this.timeInfo.setText(`Time: ${ this.getSeconds() }`);
 
       this.minesInfo.setText(`Mines left: ${this.minefield.minesLeft}`);
     }
@@ -95,10 +95,17 @@ export class GameState extends AbstractState {
     if (newGame) {
       this.gameEnded = false;
       this.minefieldScene.removeChildren();
-      this.minefield = new Minefield(this.minefieldScene, () => {
-        this.gameEnded = true;
-        setTimeout(() => this.stateChanged('end', false), 1000);
-      });
+      this.minefield = new Minefield(
+        this.minefieldScene, 
+        () => {
+          this.gameEnded = true;
+          setTimeout(() => this.stateChanged('end', { victory: true, time: this.getSeconds() }), this.config.game.victoryDelay);
+        },
+        () => {
+          this.gameEnded = true;
+          setTimeout(() => this.stateChanged('end', {victory: false }), this.config.game.loseDelay);
+        }
+      );
       this.minefieldScene.position.set(
         (this.config.screenWidth - this.minefieldScene.width) / 2,
         (this.config.screenHeight + this.gameInfo.height - this.minefieldScene.height) / 2
@@ -128,7 +135,7 @@ export class GameState extends AbstractState {
     return new PIXI.Graphics()
       .beginFill(0x77bbee)
       .lineStyle(1, 0x888888)
-      .drawRoundedRect(0, 0, this.config.game.buttons.bgWidth, this.config.game.buttons.bgHeight, 4)
+      .drawRoundedRect(0, 0, this.config.game.buttons.bgWidth, this.config.game.buttons.bgHeight, 8)
       .endFill();
   }
 
@@ -137,5 +144,9 @@ export class GameState extends AbstractState {
       this.stateChanged('pause');
       event.preventDefault();
     }
+  }
+
+  private getSeconds(): number {
+    return this.time / this.MS_PER_SECOND ^ 0;
   }
 }

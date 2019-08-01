@@ -20,20 +20,23 @@ export class Minefield {
     this.openMines();
     this.mineExploded();
   }).bind(this);
+  private onVictory: () => void;
 
   scene: PIXI.Container;
 
-  minesCount: number;
-  markedCellCount = 0;
-  openedCellCount = 0;
+  private minesCount: number;
+  private markedCellCount = 0;
+  private openedCellCount = 0;
+  private cellCount = 0;
 
   get minesLeft() {
     return this.minesCount - this.markedCellCount;
   }
 
-  constructor(scene: PIXI.Container, mineExploded: () => void) {
+  constructor(scene: PIXI.Container, onVictory: () => void, onLose: () => void) {
     this.scene = scene;
-    this.mineExploded = mineExploded;
+    this.mineExploded = onLose;
+    this.onVictory = onVictory;
 
     this.config = ConfigService.getInstance().getConfig().game.minefield;
 
@@ -45,6 +48,7 @@ export class Minefield {
   }
 
   private generateCells() {
+    this.cellCount = this.config.columns * this.config.rows;
     const cellTexture = Resources.get('cell');
     //distance between right top corners of the adjacent cells
     const cellStep = this.config.cellSize + this.config.cellMargin;
@@ -149,11 +153,27 @@ export class Minefield {
         }
       });
     }
+
+    this.checkForVictory();
   }
 
   private adjustMarked(cell: Cell) {
-    if (cell.marked) this.markedCellCount++;
-    else this.markedCellCount--;
+    if (cell.marked) {
+      this.markedCellCount++;
+    } else {
+      this.markedCellCount--;
+    }
+
+    this.checkForVictory();
+  }
+
+  private checkForVictory() {
+    if ( (this.markedCellCount === this.minesCount)
+        && (this.markedCellCount + this.openedCellCount === this.cellCount) ) {
+      
+      this.openMines();
+      this.onVictory();
+    }
   }
 
   private openMines() {

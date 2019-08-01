@@ -24,11 +24,13 @@
 
   "game": {
     "background": "game-background",
+    "loseDelay": 1500,
+    "victoryDelay": 1000,
 
     "minefield": {
       "columns": 30,
       "rows": 20,
-      "minesCount": 50,
+      "minesCount": 10,
       "cellSize": 20,
       "cellMargin": 4,
       "numberStyle": {
@@ -91,7 +93,41 @@
   "end": {
     "background": "game-background",
     "victory": {
-
+      "textStyle": {
+        "fontSize": 64,
+        "fill": ["#b91", "#fd7", "#b91"],
+        "fontWeight": 600,
+        "stroke": "#333",
+        "strokeThickness": 3
+      },
+      "timeTextStyle": {
+        "fontSize": 48,
+        "fill": ["#b91", "#fd7", "#b91"],
+        "fontWeight": 500,
+        "stroke": "#333",
+        "strokeThickness": 2
+      },
+      "victoryCupTexture": "victory-cup",
+      "playAgainButton": {
+        "bgColorHexString": "0x80aaff",
+        "borderWidth": 3,
+        "borderColorHexString": "0xa58830",
+        "padding": {
+          "x": 16,
+          "y": 8
+        },
+        "icon": "play-icon",
+        "iconSize": 30,
+        "textStyle": {
+          "fontSize": 30,
+          "fill": ["#333", "#888", "#333"],
+          "fontWeight": 600
+        },
+        "marginTextX": 12,
+        "marginY": 20
+      },
+      "timeTextMarginY": 10,
+      "victoryCupMarginY": 16
     },
     "lose": {
       "textStyle": {

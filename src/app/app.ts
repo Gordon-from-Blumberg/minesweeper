@@ -43,6 +43,7 @@ export class App {
       .add('barbed-wire', 'barbed-wire.png')
       .add('play-icon', 'play-icon.png')
       .add('pause-icon', 'pause-icon.png')
+      .add('victory-cup', 'victory-cup.png')
 
       .load((loader, resources) => {
         Resources.setResources(resources);

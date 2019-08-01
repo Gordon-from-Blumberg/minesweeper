@@ -9,6 +9,7 @@ export class EndState extends AbstractState {
   private victory = false;
 
   private victoryContainer: PIXI.Container;
+  private timeText: PIXI.Text;
   private loseContainer: PIXI.Container;
 
   private config;
@@ -35,12 +36,14 @@ export class EndState extends AbstractState {
 
   }
 
-  activate(victory: boolean) {
-    this.victory = victory;
-    if (victory) {
+  activate(data: {victory: boolean, time?: number}) {
+    if (data.victory) {
       this.victoryContainer.visible = true;
+      this.loseContainer.visible = false;
+      this.timeText.text = `Your time is ${ data.time }s`
     } else {
       this.loseContainer.visible = true;
+      this.victoryContainer.visible = false;
     }
   }
 
@@ -49,6 +52,44 @@ export class EndState extends AbstractState {
     const container = new PIXI.Container();
     container.visible = false;
     this.scene.addChild(container);
+
+    const text = new PIXI.Text('YOU WON!', cfg.textStyle);
+    container.addChild(text);
+
+    this.timeText = new PIXI.Text('Your time is 0000s', cfg.timeTextStyle);
+    container.addChild(this.timeText);
+
+    const victoryCupSprite = new PIXI.Sprite( Resources.get(cfg.victoryCupTexture) );
+    container.addChild(victoryCupSprite);
+
+    const playAgainButton = new InfoBlock()
+        .background( new PIXI.Graphics()
+            .beginFill(+cfg.playAgainButton.bgColorHexString)
+            .lineStyle(cfg.playAgainButton.borderWidth, +cfg.playAgainButton.borderColorHexString)
+            .drawRoundedRect(0, 0, 300, 80, 20)
+            .endFill() )
+        .setPadding(cfg.playAgainButton.padding)
+        .setButtonMode(true)
+        .addIcon(cfg.playAgainButton.icon, {}, { x: cfg.playAgainButton.iconSize, y: cfg.playAgainButton.iconSize })
+        .addText('PLAY AGAIN', { x: cfg.playAgainButton.marginTextX }, cfg.playAgainButton.textStyle)
+        .finishBuild();
+    container.addChild(playAgainButton);
+
+    let positionY = 0;
+    text.position.set( (container.width - text.width) / 2, positionY );
+    positionY += text.height + cfg.timeTextMarginY;
+    this.timeText.position.set( (container.width - this.timeText.width) / 2, positionY );
+    positionY += this.timeText.height + cfg.victoryCupMarginY;
+    victoryCupSprite.position.set( (container.width - victoryCupSprite.width) / 2, positionY );
+    positionY += victoryCupSprite.height + cfg.playAgainButton.marginY;
+    playAgainButton.position.set( (container.width - playAgainButton.width) / 2, positionY );
+
+    playAgainButton.on('click', () => this.stateChanged('game', true));
+    // todo: this code is repeated in multiple places so it needs to be refactored
+    container.position.set(
+      (this.config.screenWidth - container.width) / 2,
+      (this.config.screenHeight - container.height) / 2
+    );
 
     return container;
   }
@@ -65,8 +106,8 @@ export class EndState extends AbstractState {
     const tryAgainButton = new InfoBlock()
         .background( new PIXI.Graphics()
             .beginFill(+cfg.button.bgColorHexString)
-            .drawRoundedRect(0, 0, 250, 76, 32)
             .lineStyle(5, +cfg.button.borderColorHexString)
+            .drawRoundedRect(0, 0, 250, 76, 20)
             .endFill() )
         .setPadding(cfg.button.padding)
         .setButtonMode(true)
@@ -74,8 +115,6 @@ export class EndState extends AbstractState {
         .finishBuild();
     container.addChild(tryAgainButton);
 
-    const containerWidth = container.width;
-    console.log(`lose container width = ${ containerWidth }`)
     text.position.set( (container.width - text.width) / 2, 0 );
     tryAgainButton.position.set(
       (container.width - tryAgainButton.width) / 2,
